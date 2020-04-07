@@ -24,6 +24,8 @@ public class StarAnimation extends Animation {
     /** ctor expects to be told the size of the animation canvas */
     public StarAnimation(int initWidth, int initHeight) {
         super(initWidth, initHeight);
+        StarAnimationThread saThread = new StarAnimationThread(this);
+        saThread.start();
     }
 
     /** whenever the canvas size changes, generate new stars */
@@ -41,33 +43,38 @@ public class StarAnimation extends Animation {
     /** adds a randomly located star to the field */
     public void addStar() {
         //Ignore this call if the canvas hasn't been initialized yet
-        if ((width <= 0) || (height <= 0)) return;
+        synchronized (this){
+            if ((width <= 0) || (height <= 0)) return;
 
-        int x = rand.nextInt(width);
-        int y = rand.nextInt(height);
+            int x = rand.nextInt(width);
+            int y = rand.nextInt(height);
 
 
-        field.add(new Star(x, y));
+            field.add(new Star(x, y));
+        }
     }//addStar
 
     /** removes a random star from the field */
     public void removeStar() {
-        if (field.size() > 100) {
-            int index = rand.nextInt(field.size());
-            field.remove(index);
+        synchronized (this){
+            if (field.size() > 100) {
+                int index = rand.nextInt(field.size());
+                field.remove(index);
+            }
         }
     }//removeStar
 
     /** draws the next frame of the animation */
     @Override
     public void draw(Canvas canvas) {
-        for (Star s : field) {
-            s.draw(canvas);
-            if (this.twinkle) {
-                s.twinkle();
+        synchronized(this){
+            for (Star s : field) {
+                s.draw(canvas);
+                if (this.twinkle) {
+                    s.twinkle();
+                }
             }
         }
-
         this.twinkle = true;
     }//draw
 
