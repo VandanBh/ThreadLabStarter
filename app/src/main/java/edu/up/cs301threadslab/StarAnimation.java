@@ -76,12 +76,12 @@ public class StarAnimation extends Animation {
     public void progressChange(int newProgress) {
         //int brightness = 255 - (newProgress * 2);
         //Star.starPaint.setColor(Color.rgb(brightness, brightness, brightness));
-        if((((newProgress-1)*10)+100) > field.size()){
-            for(int i = 0; i<(((newProgress-1)*10)+100) - field.size(); i++){
+        if((((newProgress-1)*9)+100) > field.size()){
+            for(int i = 0; i<(((newProgress-1)*9)+100) - field.size(); i++){
                 addStar();
             }
-        } else if((((newProgress-1)*10)+100) < field.size()){
-            for(int i = 0; i<(field.size() - (((newProgress-1)*10)+100)); i++){
+        } else if((((newProgress-1)*9)+100) < field.size()){
+            for(int i = 0; i<(field.size() - (((newProgress-1)*9)+100)); i++){
                 removeStar();
             }
         }
