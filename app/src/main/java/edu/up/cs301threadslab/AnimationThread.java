@@ -10,7 +10,7 @@ public class AnimationThread extends Thread {
         while(true){
             av.postInvalidate();
             try {
-                Thread.sleep(3000);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
